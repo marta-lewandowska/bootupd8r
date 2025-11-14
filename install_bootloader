@@ -29,7 +29,7 @@ if [[ -d ${EFI_DIR}/b/ ]]; then
         NEW_BOOT_ENTRY=$(efibootmgr | grep "_new" | cut -d'*' -f1)
         if [[ -z ${NEW_BOOT_ENTRY} ]]; then
 # first check if create_boot_path exists / is installed, then run it
-            create_boot_path.sh
+            create_boot_path
             NEW_BOOT_ENTRY=$(efibootmgr | grep "_new" | cut -d'*' -f1)
         fi 
         NEW_BOOT_ENTRY=$(echo $NEW_BOOT_ENTRY | sed -i 's/Boot//')

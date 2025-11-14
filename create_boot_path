@@ -59,7 +59,7 @@ if [ ! -d ${ESP_DIR_B} ]; then
   
     # create entry for new EFI_PATH
     if [[ -n CMDLINE ]]; then
-    # TODO / FINISH
+    # TODO
         echo -n "\nmbl-cloud.uki $(echo $BOOT_OPTIONS) boot=$(awk '/ \/boot / {print $1}' /etc/fstab) rd.system.gpt_auto=0" | iconv -f UTF8 -t UCS-2LE | efibootmgr -C -d ${DEVICE} -p ${PARTITION} -L ${NAME}_new -l /EFI/${DISTRO}/b/shim${AR}.efi -@ -
     else
         efibootmgr -C -w -L ${NAME}_new -d ${DEVICE} -p ${PARTITION} -l ${EFI_PATH}

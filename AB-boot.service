@@ -3,8 +3,8 @@ Description=Setting good boot entry
 Wants=boot-complete.target
 
 [Service]
-ExecStart=/bin/bash /usr/sbin/set_boot_entry.sh
-ExecStart=/bin/bash /usr/sbin/set_boot_entry.sh BOOT
+ExecStart=/bin/bash /usr/sbin/set_boot_entry
+ExecStart=/bin/bash /usr/sbin/set_boot_entry BOOT
 
 [Install]
 WantedBy=multi-user.target
