@@ -27,7 +27,6 @@ bootupd8r creates a fallback mechanism on UEFI for installing new boot loaders.
 %autosetup -S git_am
 
 %build
-%configure
 make all
 
 %install
