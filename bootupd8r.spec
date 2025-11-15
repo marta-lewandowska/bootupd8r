@@ -18,7 +18,6 @@ BuildRequires: make
 # For %%_userunitdir and %%systemd_* macros
 BuildRequires:  systemd-rpm-macros
 
-Requires:
 %{?systemd_requires}
 
 %description

@@ -8,6 +8,13 @@ OS_DIST := $(shell rpm --eval '%{dist}')
 ARCH := $(shell rpm --eval '%{_build_arch}')
 VR := $(VERSION)-$(RELEASE)$(OS_DIST)
 KVRA := $(VERSION)-$(RELEASE).$(ARCH)
+RPMBUILD_ARGS := -D "_topdir $(TOPDIR)" \
+                 -D '_builddir %{_topdir}' \
+                 -D '_rpmdir %{_topdir}' \
+                 -D '_sourcedir %{_topdir}' \
+                 -D '_specdir %{_topdir}' \
+                 -D '_srcrpmdir %{_topdir}' \
+                 -D 'dist %nil'
 
 all:
 
