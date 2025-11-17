@@ -10,11 +10,15 @@ Summary: Updates boot loaders
 
 License: GPLv3
 URL:     https://github.com/marta-lewandowska/bootupd8r
-Source0: bootupd8r-%{version}.tar.xz
 
 BuildRequires: git
 BuildRequires: make
 BuildRequires: systemd
+
+Source0: bootupd8r-%{version}.tar.xz
+Source1: install_bootloader
+Source2: create_boot_path
+Source3: set_boot_entry
 
 # For %%_userunitdir and %%systemd_* macros
 BuildRequires:  systemd-rpm-macros
@@ -33,9 +37,9 @@ make all
 %install
 set -e
 install -d -m 0755 %{buildroot}%{_prefix}/lib/bootloader
-install -D -m 0744 %{buildroot}%{_prefix}/lib/bootloader/install_bootloader
-install -D -m 0744 %{buildroot}%{_sbindir}/create_boot_path
-install -D -m 0744 %{buildroot}%{_sbindir}/set_boot_entry
+install -m 0755 %{SOURCE1} %{buildroot}%{_prefix}/lib/bootloader/
+install -m 0755 %{SOURCE2} %{buildroot}%{_sbindir}/
+install -m 0755 %{SOURCE3} %{buildroot}%{_sbindir}/
 install -D -m 0755 -t %{buildroot}%{_userunitdir} \
         AB-boot.service
 install -d -m 0755 %{buildroot}%{_unitdir}/multi-user.target.wants
