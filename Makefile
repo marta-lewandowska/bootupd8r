@@ -3,6 +3,7 @@
 #
 
 TOPDIR ?= .
+DESTDIR ?= temp
 VERSION := 1
 RELEASE := 1
 OS_DIST := $(shell rpm --eval '%{dist}')
@@ -36,6 +37,13 @@ bootupd8r-$(VR).src.rpm : bootupd8r.spec bootupd8r-$(VERSION).tar.xz
 bootupd8r-$(KVRA).rpm : bootupd8r-$(VR).src.rpm
 	mock  -r "$(MOCK_ROOT_NAME)" --installdeps bootupd8r-$(VR).src.rpm --cache-alterations --no-clean --no-cleanup-after
 	mock -r "$(MOCK_ROOT_NAME)" --rebuild bootupd8r-$(VR).src.rpm --no-clean
+
+install :
+	install -m 0755 -d "${DESTDIR}/usr/lib/bootloader"
+	install -m 0755 -t "${DESTDIR}/usr/lib/bootloader" install_bootloader
+	install -m 0755 -d "${DESTDIR}/usr/sbin/"
+	install -m 0755 -t "${DESTDIR}/usr/sbin/" create_boot_path
+	install -m 0755 -t "${DESTDIR}/usr/sbin/" set_boot_entry
 
 clean :
 	@rm -vf bootupd8r-$(VERSION).tar.xz
