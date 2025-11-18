@@ -33,7 +33,7 @@ make all
 
 %install
 set -e
-install -D -m 0755 -t %{buildroot}%{_userunitdir} \
+install -D -m 0755 -t %{buildroot}%{_unitdir} \
         AB-boot.service
 install -d -m 0755 %{buildroot}%{_unitdir}/multi-user.target.wants
 ln -s ../AB-boot.service \
@@ -44,9 +44,9 @@ ln -s ../AB-boot.service \
 %defattr(-,root,root,-)
 %dir %{_prefix}/lib/bootloader
 %{_prefix}/lib/bootloader/install_bootloader
-%dir %{_sbindir}
-%{_sbindir}/set_boot_entry
-%{_sbindir}/create_boot_path
+%dir /usr/sbin
+/usr/sbin/set_boot_entry
+/usr/sbin/create_boot_path
 %dir %{_unitdir}
 %{_unitdir}/AB-boot.service
 
