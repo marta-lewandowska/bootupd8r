@@ -28,7 +28,6 @@ bootupd8r-$(VERSION).tar.xz :
 		create_boot_path \
 		install_bootloader \
 		set_boot_entry \
-		Makefile \
 	| xz > $@
 
 bootupd8r-$(VR).src.rpm : bootupd8r.spec bootupd8r-$(VERSION).tar.xz

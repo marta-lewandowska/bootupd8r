@@ -20,6 +20,8 @@ Source0: bootupd8r-%{version}.tar.xz
 # For %%_userunitdir and %%systemd_* macros
 BuildRequires:  systemd-rpm-macros
 
+BuildArch: noarch
+
 %{?systemd_requires}
 
 %description
@@ -28,27 +30,25 @@ bootupd8r creates a fallback mechanism on UEFI for installing new boot loaders.
 %prep
 %autosetup -S git_am
 
-%build
-make all
-
 %install
-set -e
-install -D -m 0755 -t %{buildroot}%{_unitdir} \
-        AB-boot.service
-install -d -m 0755 %{buildroot}%{_unitdir}/multi-user.target.wants
-ln -s ../AB-boot.service \
-        %{buildroot}%{_unitdir}/multi-user.target.wants
-%make_install
+ln -s AB-boot.service multi-user.target.wants
+
+install -m 0755 -d %{buildroot}%{_bindir}/bootloader
+install -m 0755 -t %{buildroot}%{_bindir}/bootloader install_bootloader
+install -m 0755 -t %{buildroot}%{_sbindir} create_boot_path
+install -m 0755 -t %{buildroot}%{_sbindir} set_boot_entry
+install -m 0755 -d %{buildroot}%{_unitdir}
+install -m 0755 -t %{buildroot}%{_unitdir} AB-boot.service
+install -m 0755 -t %{buildroot}%{_unitdir} multi-user.target.wants
 
 %files
 %defattr(-,root,root,-)
-%dir %{_prefix}/lib/bootloader
-%{_prefix}/lib/bootloader/install_bootloader
-%dir /usr/sbin
-/usr/sbin/set_boot_entry
-/usr/sbin/create_boot_path
-%dir %{_unitdir}
+%dir %{_bindir}/bootloader
+%{_bindir}/bootloader/install_bootloader
+%{_sbindir}/set_boot_entry
+%{_sbindir}/create_boot_path
 %{_unitdir}/AB-boot.service
+%{_unitdir}/multi-user.target.wants
 
 %posttrans
 . %{_sbindir}/create_boot_path
