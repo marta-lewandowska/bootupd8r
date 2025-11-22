@@ -38,7 +38,7 @@ install -m 0755 -t %{buildroot}%{_sbindir} create_boot_path
 install -m 0755 -t %{buildroot}%{_sbindir} set_boot_entry
 install -m 0755 -d %{buildroot}%{_unitdir}
 install -m 0755 -t %{buildroot}%{_unitdir} AB-boot.service
-install -m 0755 -t %{buildroot}%{_unitdir} multi-user.target.wants
+install -m 0755 -t %{buildroot}%{_unitdir}/multi-user.target.wants
 
 %files
 %defattr(-,root,root,-)
@@ -46,6 +46,7 @@ install -m 0755 -t %{buildroot}%{_unitdir} multi-user.target.wants
 %{_prefix}/lib/bootloader/install_bootloader
 %{_sbindir}/set_boot_entry
 %{_sbindir}/create_boot_path
+%{_unitdir}/multi-user.target.wants
 %{_unitdir}/AB-boot.service
 
 %posttrans
