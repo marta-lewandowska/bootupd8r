@@ -54,5 +54,8 @@ install -m 0755 -t %{buildroot}%{_unitdir} multi-user.target.wants
 . %{_sbindir}/create_boot_path
 
 %changelog
+* Fri Nov 21 2025 Pavel Valena <pvalena@redhat.com>
+- Fixes to Makefile and spec file
+
 * Fri Nov 14 2025 Marta Lewandowska <mlewando@redhat.com>
 - First trial of bootupdr

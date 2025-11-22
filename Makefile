@@ -44,9 +44,7 @@ install :
 	install -m 0755 -t "${DESTDIR}/usr/sbin" create_boot_path
 	install -m 0755 -t "${DESTDIR}/usr/sbin" set_boot_entry
 
-tarball : bootupd8r-$(VERSION).tar.xz
-
 clean :
 	@rm -vf bootupd8r-$(VERSION).tar.xz
 
-.PHONY: all install clean tarball
+.PHONY: all install clean archive
