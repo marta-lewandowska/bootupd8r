@@ -5,7 +5,7 @@
 
 Name: bootupd8r
 Version: 1
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: Updates boot loaders
 
 License: GPLv3
@@ -46,13 +46,16 @@ ln -s ../AB-boot.service %{buildroot}%{_unitdir}/multi-user.target.wants
 %{_prefix}/lib/bootloader/install_bootloader
 %{_sbindir}/set_boot_entry
 %{_sbindir}/create_boot_path
-%{_unitdir}/multi-user.target.wants
 %{_unitdir}/AB-boot.service
+%{_unitdir}/multi-user.target.wants/AB-boot.service
 
 %posttrans
 . %{_sbindir}/create_boot_path
 
 %changelog
+* Mon Nov 24 2025 Pavel Valena <pvalena@redhat.com> - 1-2
+- Fixup _unitdir ownership.
+
 * Fri Nov 21 2025 Pavel Valena <pvalena@redhat.com>
 - Fixes to Makefile and spec file
 
