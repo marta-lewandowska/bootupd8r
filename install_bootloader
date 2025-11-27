@@ -4,22 +4,25 @@ if [[ ! -d /sys/firmware/efi/ ]]; then
     exit 0
 fi
 
-if [[ $# < 3 ]]; then
+if [[ $# < 2 ]]; then
     exit 0
 fi
 
 . /etc/os-release
 DISTRO=$(echo ${ID} | sed -e 's/rhel/redhat/' -e 's/\"//')
 
-PKG=${1}
-VER=${2}
-ARCH=${3}
-if [[ $# > 3 ]]; then
-    DISTRO=${4}
-fi
+#PKG=${1}
+#VER=${2}
+#ARCH=${3}
+#if [[ $# > 3 ]]; then
+#    DISTRO=${4}
+#fi
 
-FROM_DIR=/usr/lib/${PKG}/${VER}/${ARCH}/EFI/${DISTRO}
-EFI_DIR=/boot/efi/EFI/${DISTRO}
+#FROM_DIR=/usr/lib/${PKG}/${VER}/${ARCH}/EFI/${DISTRO}
+#EFI_DIR=/boot/efi/EFI/${DISTRO}
+
+FROM_DIR=${1}
+EFI_DIR=${2}
 
 if [[ -f /usr/lib/bootloader/bl.cfg ]]; then
     . /usr/lib/bootloader/bl.cfg

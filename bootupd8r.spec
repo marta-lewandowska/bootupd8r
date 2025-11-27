@@ -5,7 +5,7 @@
 
 Name: bootupd8r
 Version: 1
-Release: 2%{?dist}
+Release: 3%{?dist}
 Summary: Updates boot loaders
 
 License: GPLv3
@@ -53,6 +53,9 @@ ln -s ../AB-boot.service %{buildroot}%{_unitdir}/multi-user.target.wants
 . %{_sbindir}/create_boot_path
 
 %changelog
+* Thu Nov 27 2025 Marta Lewandowska <mlewando@redhat.com> - 1-3
+- Add support for config file and consistent install_bootloader
+
 * Mon Nov 24 2025 Pavel Valena <pvalena@redhat.com> - 1-2
 - Fixup _unitdir ownership.
 
