@@ -22,7 +22,7 @@ DISTRO=$(echo ${ID} | sed -e 's/rhel/redhat/' -e 's/\"//')
 #EFI_DIR=/boot/efi/EFI/${DISTRO}
 
 FROM_DIR=${1}
-EFI_DIR=${2}
+EFI_DIR=${2}/b
 
 if [[ -f /usr/lib/bootloader/bl.cfg ]]; then
     . /usr/lib/bootloader/bl.cfg
