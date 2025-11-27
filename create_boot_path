@@ -58,10 +58,27 @@ if [ ! -d ${ESP_DIR_B} ]; then
     EFI_PATH=$(echo $EFI_PATH | sed -e "s/${DISTRO}\\\s/${DISTRO}\\\b\\\s/" -e 's/\\/\\\\/g')
   
     # create entry for new EFI_PATH
+    NEW_NAME=${NAME}_new
+    efibootmgr | grep -q $NEW_NAME
+    if [[ $? -eq 0 ]]; then
+        old_entry=$(efibootmgr | grep $NEW_NAME | cut -d' ' -f1)
+        old_entry=$(echo $old_entry | sed 's/Boot//' | sed 's/*//')
+        efibootmgr -B -b $old_entry
+    fi
+
     if [[ -n CMDLINE ]]; then
     # TODO
-        echo -n "\nmbl-cloud.uki $(echo $BOOT_OPTIONS) boot=$(awk '/ \/boot / {print $1}' /etc/fstab) rd.system.gpt_auto=0" | iconv -f UTF8 -t UCS-2LE | efibootmgr -C -d ${DEVICE} -p ${PARTITION} -L ${NAME}_new -l /EFI/${DISTRO}/b/shim${AR}.efi -@ -
+        echo -n "\nmbl-cloud.uki $(echo $CMDLINE) boot=$(awk '/ \/boot / {print $1}' /etc/fstab) rd.system.gpt_auto=0" | iconv -f UTF8 -t UCS-2LE | efibootmgr -C -d ${DEVICE} -p ${PARTITION} -L $NEW_NAME -l /EFI/${DISTRO}/b/shim${AR}.efi -@ -
     else
-        efibootmgr -C -w -L ${NAME}_new -d ${DEVICE} -p ${PARTITION} -l ${EFI_PATH}
+        efibootmgr -C -w -L $NEW_NAME -d ${DEVICE} -p ${PARTITION} -l ${EFI_PATH}
+    fi
+
+    if [[ ! -f /usr/lib/bootloader/bl.cfg ]]; then
+        cat > /usr/lib/bootloader/bl.cfg << EOF
+NAME=${NAME}
+DEVICE=${DEVICE}
+PARTITION=${PARTITION}
+EFI_PATH=${EFI_PATH}
+EOF
     fi
 fi

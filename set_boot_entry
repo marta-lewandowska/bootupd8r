@@ -14,8 +14,12 @@ fi
 ESP_DIR_A=/boot/efi/EFI/${DISTRO}
 ESP_DIR_B=/boot/efi/EFI/${DISTRO}/b
 
+if [[ -f /usr/lib/bootloader/bl.cfg ]]; then
+    . /usr/lib/bootloader/bl.cfg
+fi
+
 ENTRY=$(efibootmgr | grep BootCurrent | cut -d':' -f2)
-efibootmgr | grep $ENTRY | grep -q "_new"
+efibootmgr | grep $ENTRY | grep -q "${NAME}_new"
 result=$(echo $?)
 
 if [ $result -eq 0 ]; then
