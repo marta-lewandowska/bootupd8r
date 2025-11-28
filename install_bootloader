@@ -11,18 +11,8 @@ fi
 . /etc/os-release
 DISTRO=$(echo ${ID} | sed -e 's/rhel/redhat/' -e 's/\"//')
 
-#PKG=${1}
-#VER=${2}
-#ARCH=${3}
-#if [[ $# > 3 ]]; then
-#    DISTRO=${4}
-#fi
-
-#FROM_DIR=/usr/lib/${PKG}/${VER}/${ARCH}/EFI/${DISTRO}
-#EFI_DIR=/boot/efi/EFI/${DISTRO}
-
 FROM_DIR=${1}
-EFI_DIR=${2}/b
+EFI_DIR=${2}
 
 if [[ -f /usr/lib/bootloader/bl.cfg ]]; then
     . /usr/lib/bootloader/bl.cfg
@@ -38,7 +28,7 @@ if [[ -d ${EFI_DIR}/b/ ]]; then
             create_boot_path
             NEW_BOOT_ENTRY=$(efibootmgr | grep "${NAME}_new" | cut -d'*' -f1)
         fi 
-        NEW_BOOT_ENTRY=$(echo $NEW_BOOT_ENTRY | sed -i 's/Boot//')
+        NEW_BOOT_ENTRY=$(echo $NEW_BOOT_ENTRY | sed 's/Boot//')
         efibootmgr -n $NEW_BOOT_ENTRY
     fi
 fi

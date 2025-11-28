@@ -66,7 +66,7 @@ if [ ! -d ${ESP_DIR_B} ]; then
         efibootmgr -B -b $old_entry
     fi
 
-    if [[ -n CMDLINE ]]; then
+    if [[ -n $CMDLINE ]]; then
     # TODO
         echo -n "\nmbl-cloud.uki $(echo $CMDLINE) boot=$(awk '/ \/boot / {print $1}' /etc/fstab) rd.system.gpt_auto=0" | iconv -f UTF8 -t UCS-2LE | efibootmgr -C -d ${DEVICE} -p ${PARTITION} -L $NEW_NAME -l /EFI/${DISTRO}/b/shim${AR}.efi -@ -
     else
