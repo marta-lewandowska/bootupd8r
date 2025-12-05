@@ -5,7 +5,6 @@ Wants=boot-complete.target
 [Service]
 Type=oneshot
 ExecStart=/bin/bash /usr/sbin/set_boot_entry
-ExecStart=/bin/bash /usr/sbin/set_boot_entry BOOT
 
 [Install]
 WantedBy=multi-user.target

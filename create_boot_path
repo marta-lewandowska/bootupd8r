@@ -14,7 +14,7 @@ if [[ ${ARCH} == aarch64 ]]; then
 fi
 
 ESP_DIR_A=/boot/efi/EFI/${DISTRO}
-ESP_DIR_B=/boot/efi/EFI/${DISTRO}/b
+ESP_DIR_B=/boot/efi/EFI_NEW/${DISTRO}/
 
 # default settings
 NAME=${DISTRO}
@@ -46,7 +46,7 @@ parse_string() {
 if [ ! -d ${ESP_DIR_B} ]; then
     # create directory for new entry and copy binaries there
     mkdir -p ${ESP_DIR_B}
-    cp ${ESP_DIR_A}/* ${ESP_DIR_B}/.
+    cp -r ${ESP_DIR_A}/* ${ESP_DIR_B}/.
   
     INSTALL_LOG=/var/log/anaconda/storage.log
     if [[ -f /usr/lib/bootloader/bl.cfg ]]; then
@@ -55,8 +55,8 @@ if [ ! -d ${ESP_DIR_B} ]; then
         EFI_ENTRY=$(grep "efibootmgr " $INSTALL_LOG | cut -d' ' -f5-)
         parse_string ${EFI_ENTRY}
     fi
-    EFI_PATH=$(echo $EFI_PATH | sed -e "s/${DISTRO}\\\s/${DISTRO}\\\b\\\s/" -e 's/\\/\\\\/g')
-  
+    EFI_PATH=$(echo $EFI_PATH | sed -e "s/EFI/EFI_NEW/")
+
     # create entry for new EFI_PATH
     NEW_NAME=${NAME}_new
     efibootmgr | grep -q $NEW_NAME
@@ -68,7 +68,7 @@ if [ ! -d ${ESP_DIR_B} ]; then
 
     if [[ -n $CMDLINE ]]; then
     # TODO
-        echo -n "\nmbl-cloud.uki $(echo $CMDLINE) boot=$(awk '/ \/boot / {print $1}' /etc/fstab) rd.system.gpt_auto=0" | iconv -f UTF8 -t UCS-2LE | efibootmgr -C -d ${DEVICE} -p ${PARTITION} -L $NEW_NAME -l /EFI/${DISTRO}/b/shim${AR}.efi -@ -
+        echo -n "\nmbl-cloud.uki $(echo $CMDLINE) boot=$(awk '/ \/boot / {print $1}' /etc/fstab) rd.system.gpt_auto=0" | iconv -f UTF8 -t UCS-2LE | efibootmgr -C -d ${DEVICE} -p ${PARTITION} -L $NEW_NAME -l /EFI_NEW/${DISTRO}/shim${AR}.efi -@ -
     else
         efibootmgr -C -w -L $NEW_NAME -d ${DEVICE} -p ${PARTITION} -l ${EFI_PATH}
     fi

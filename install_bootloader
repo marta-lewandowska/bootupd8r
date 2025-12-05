@@ -18,8 +18,7 @@ if [[ -f /usr/lib/bootloader/bl.cfg ]]; then
     . /usr/lib/bootloader/bl.cfg
 fi
 
-if [[ -d ${EFI_DIR}/b/ ]]; then
-    EFI_DIR=${EFI_DIR}/b
+if [[ -d ${EFI_DIR} ]]; then
     efibootmgr | grep BootNext
     status=$(echo $?)
     if [[ $status -eq 1 ]]; then
