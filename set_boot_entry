@@ -4,8 +4,8 @@ if [[ ! -d /sys/firmware/efi/ ]]; then
     exit 0
 fi
 
-ESP_DIR_A=/boot/efi/EFI/
-ESP_DIR_B=/boot/efi/EFI_NEW/
+ESP_DIR_A=/boot/efi/EFI
+ESP_DIR_B=/boot/efi/EFI_NEW
 
 if [[ -f /usr/lib/bootloader/bl.cfg ]]; then
     . /usr/lib/bootloader/bl.cfg

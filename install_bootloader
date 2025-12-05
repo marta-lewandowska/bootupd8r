@@ -32,4 +32,4 @@ if [[ -d ${EFI_DIR} ]]; then
     fi
 fi
 
-cp ${FROM_DIR}/* ${EFI_DIR}/.
+cp -r ${FROM_DIR}/* ${EFI_DIR}/.
