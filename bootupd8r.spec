@@ -5,7 +5,7 @@
 
 Name: bootupd8r
 Version: 1
-Release: 5%{?dist}
+Release: 6%{?dist}
 Summary: Updates boot loaders
 
 License: GPLv3
@@ -49,10 +49,19 @@ ln -s ../AB-boot.service %{buildroot}%{_unitdir}/multi-user.target.wants
 %{_unitdir}/AB-boot.service
 %{_unitdir}/multi-user.target.wants/AB-boot.service
 
+%systemd_post AB-boot.service
+
+%systemd_preun AB-boot.service
+
+%systemd_postun AB-boot.service
+
 %posttrans
 . %{_sbindir}/create_boot_path
 
 %changelog
+* Tue Dec 09 2025 Marta Lewandowska <mlewando@redhat.com> - 1-6
+- Hopefully fix systemd stuff and some hardening
+
 * Fri Dec 05 2025 Marta Lewandowska <mlewando@redhat.com> - 1-5
 - Rename b directory and related changes
 

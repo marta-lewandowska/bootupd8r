@@ -12,10 +12,10 @@ if [[ -f /usr/lib/bootloader/bl.cfg ]]; then
 fi
 
 ENTRY=$(efibootmgr | grep BootCurrent | cut -d':' -f2)
-efibootmgr | grep $ENTRY | grep -q "${NAME}_new"
+efibootmgr | grep ${ENTRY} | grep -q "${NAME}_new"
 result=$(echo $?)
 
-if [ $result -eq 0 ]; then
+if [[ $result -eq 0 ]]; then
     FROM_DIR=${ESP_DIR_B}
     TO_DIR=${ESP_DIR_A}
 else
@@ -25,4 +25,4 @@ else
     echo "[$(date '+%H:%M:%S  %d-%m-%Y')] new entry failed to boot" >> /var/log/bootupdate.log
 fi
 
-cp -r ${FROM_DIR}/* ${TO_DIR}/.
+cp -r ${FROM_DIR}/* ${TO_DIR}/. || :
