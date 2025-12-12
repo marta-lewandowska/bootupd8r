@@ -38,7 +38,8 @@ install -m 0755 -t %{buildroot}%{_sbindir} set_boot_entry
 install -m 0755 -d %{buildroot}%{_unitdir}
 install -m 0755 -t %{buildroot}%{_unitdir} AB-boot.service
 install -m 0755 -d %{buildroot}%{_unitdir}/multi-user.target.wants
-ln -s ../AB-boot.service %{buildroot}%{_unitdir}/multi-user.target.wants
+install -m 0755 -d %{buildroot}%{_presetdir}
+install -m 0755 -d %{buildroot}%{_presetdir}/91-AB-boot.preset
 
 %files
 %defattr(-,root,root,-)
@@ -47,7 +48,7 @@ ln -s ../AB-boot.service %{buildroot}%{_unitdir}/multi-user.target.wants
 %{_sbindir}/set_boot_entry
 %{_sbindir}/create_boot_path
 %{_unitdir}/AB-boot.service
-%{_unitdir}/multi-user.target.wants/AB-boot.service
+%{_presetdir}/91-AB-boot.preset
 
 %systemd_post AB-boot.service
 
@@ -59,6 +60,9 @@ ln -s ../AB-boot.service %{buildroot}%{_unitdir}/multi-user.target.wants
 . %{_sbindir}/create_boot_path
 
 %changelog
+* Fri Dec 12 2025 Marta Lewandowska <mlewando@redhat.com> - 1-7
+- Maybe get the systemd stuff right finally
+
 * Tue Dec 09 2025 Marta Lewandowska <mlewando@redhat.com> - 1-6
 - Hopefully fix systemd stuff and some hardening
 
