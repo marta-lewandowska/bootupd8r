@@ -37,7 +37,6 @@ install -m 0755 -t %{buildroot}%{_sbindir} create_boot_path
 install -m 0755 -t %{buildroot}%{_sbindir} set_boot_entry
 install -m 0755 -d %{buildroot}%{_unitdir}
 install -m 0755 -t %{buildroot}%{_unitdir} AB-boot.service
-install -m 0755 -d %{buildroot}%{_unitdir}/multi-user.target.wants
 install -m 0755 -d %{buildroot}%{_presetdir}
 install -m 0755 -d %{buildroot}%{_presetdir} 91-AB-boot.preset
 

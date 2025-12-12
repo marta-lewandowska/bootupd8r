@@ -24,10 +24,11 @@ archive: bootupd8r-$(VERSION).tar.xz
 
 bootupd8r-$(VERSION).tar.xz :
 	@git archive --format=tar --prefix=bootupd8r-$(VERSION)/ HEAD -- \
-		AB-boot.service \
 		create_boot_path \
 		install_bootloader \
 		set_boot_entry \
+		AB-boot.service \
+		91-AB-boot.preset \
 	| xz > $@
 
 bootupd8r-$(VR).src.rpm : bootupd8r.spec bootupd8r-$(VERSION).tar.xz
