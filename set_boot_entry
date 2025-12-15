@@ -25,4 +25,4 @@ else
     echo "[$(date '+%H:%M:%S  %d-%m-%Y')] new entry failed to boot" >> /var/log/bootupdate.log
 fi
 
-cp -r ${FROM_DIR}/* ${TO_DIR}/. || :
+cp -R -f -Z ${FROM_DIR}/* ${TO_DIR}/. || :

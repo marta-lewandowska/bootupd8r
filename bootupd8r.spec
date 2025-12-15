@@ -5,7 +5,7 @@
 
 Name: bootupd8r
 Version: 1
-Release: 7%{?dist}
+Release: 8%{?dist}
 Summary: Updates boot loaders
 
 License: GPLv3
@@ -57,11 +57,15 @@ install -m 0644 -t %{buildroot}%{_presetdir} 91-AB-boot.preset
 
 %postun
 %systemd_postun AB-boot.service
+rm -rf /boot/efi/EFI_NEW/
 
 %posttrans
 . %{_sbindir}/create_boot_path
 
 %changelog
+* Mon Dec 15 2025 Marta Lewandowska <mlewando@redhat.com> - 1-8
+- Lots of little fixes
+
 * Fri Dec 12 2025 Marta Lewandowska <mlewando@redhat.com> - 1-7
 - Maybe get the systemd stuff right finally
 

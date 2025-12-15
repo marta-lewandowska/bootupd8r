@@ -26,7 +26,6 @@ EFI_PATH="\EFI\${DISTRO}\shim${AR}.efi"
 
 parse_string() {
   for i in "$@"; do
-    shift
     if [[ $1 == "-L" ]]; then
       shift
       NAME=${1}
@@ -39,14 +38,16 @@ parse_string() {
     elif [[ $1 == "-l" ]]; then
       shift
       EFI_PATH=${1}
+    else
+      shift	
     fi 
   done
 }
 
-if [ ! -d ${ESP_DIR_B} ]; then
+if [[ ! -d ${ESP_DIR_B} ]]; then
     # create directory for new entry and copy binaries there
     mkdir -p ${ESP_DIR_B}
-    cp -r ${ESP_DIR_A}/* ${ESP_DIR_B}/.
+    cp -R -f -Z ${ESP_DIR_A}/* ${ESP_DIR_B}/.
   
     INSTALL_LOG=/var/log/anaconda/storage.log
     if [[ -f /usr/lib/bootloader/bl.cfg ]]; then
@@ -79,9 +80,12 @@ NAME=${NAME}
 DEVICE=${DEVICE}
 PARTITION=${PARTITION}
 EFI_PATH=${EFI_PATH}
-if [[ -n ${CMDLINE} ]]; then
-CMDLINE=${CMDLINE} 
-fi
 EOF
+        if [[ -n ${CMDLINE} ]]; then
+            cat >> /usr/lib/bootloader/bl.cfg << EOF
+CMDLINE=${CMDLINE}
+EOF
+        fi
     fi
+
 fi
