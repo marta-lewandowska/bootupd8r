@@ -5,7 +5,7 @@
 
 Name: bootupd8r
 Version: 1
-Release: 6%{?dist}
+Release: 7%{?dist}
 Summary: Updates boot loaders
 
 License: GPLv3
@@ -49,10 +49,13 @@ install -m 0644 -t %{buildroot}%{_presetdir} 91-AB-boot.preset
 %{_unitdir}/AB-boot.service
 %{_presetdir}/91-AB-boot.preset
 
+%post
 %systemd_post AB-boot.service
 
+%preun
 %systemd_preun AB-boot.service
 
+%postun
 %systemd_postun AB-boot.service
 
 %posttrans
