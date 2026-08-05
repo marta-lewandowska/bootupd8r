@@ -4,17 +4,17 @@
 
 TOPDIR ?= .
 DESTDIR ?= temp
-VERSION := 1
-RELEASE := 1
 OS_DIST := $(shell rpm --eval '%{dist}')
-VR := $(VERSION)-$(RELEASE)$(OS_DIST)
+VERSION := $(shell rpmspec -q -D "dist $(OS_DIST)" --qf "%{VERSION}" bootupd8r.spec)
+RELEASE := $(shell rpmspec -q -D "dist $(OS_DIST)" --qf "%{RELEASE}" bootupd8r.spec)
+VR := $(VERSION)-$(RELEASE)
 RPMBUILD_ARGS := -D "_topdir $(TOPDIR)" \
                  -D '_builddir %{_topdir}' \
                  -D '_rpmdir %{_topdir}' \
                  -D '_sourcedir %{_topdir}' \
                  -D '_specdir %{_topdir}' \
                  -D '_srcrpmdir %{_topdir}' \
-                 -D 'dist %nil'
+                 -D "dist $(OS_DIST)" \
 
 all:
 
