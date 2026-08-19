@@ -56,7 +56,10 @@ if [[ ! -d ${ESP_DIR_B} ]]; then
         EFI_ENTRY=$(grep "efibootmgr " ${INSTALL_LOG} | cut -d' ' -f5-)
         parse_string ${EFI_ENTRY}
     fi
-    EFI_PATH=$(echo ${EFI_PATH} | sed -e 's/EFI/EFI_NEW/' -e 's/\\/\\\\/g')
+
+    if ! echo $EFI_PATH | grep 'EFI_NEW'; then
+        EFI_PATH=$(echo ${EFI_PATH} | sed -e 's/EFI/EFI_NEW/')
+    fi
 
     # create entry for new EFI_PATH
     NEW_NAME=${NAME}_new
