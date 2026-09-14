@@ -22,7 +22,9 @@ else
     FROM_DIR=${ESP_DIR_A}
     TO_DIR=${ESP_DIR_B}
     # need to warn user that new entry failed to boot
-    echo "[$(date '+%H:%M:%S  %d-%m-%Y')] new entry failed to boot" >> /var/log/bootupdate.log
+    echo "[$(date '+%H:%M:%S  %d-%m-%Y')] New entry ${ENTRY} failed to boot; this system is in an unstable state." \
+        | tee -a /var/log/bootupdate.log >&2
+    exit 1
 fi
 
 cp -R -f -Z ${FROM_DIR}/* ${TO_DIR}/. || :
